@@ -8,14 +8,14 @@ class WindowFunction(wx.Frame):
         super(WindowFunction, self).__init__(parent, title=title,
                                              size=(500, 700))
 
-        self.file_path = None
-        self.Centre()
+        self.file_path = "/Users/cmzhang/Desktop/project/test.mp3"
         # self.InitUI()
         # pnl = wx.Panel(self)
         # closeButton = wx.Button(pnl, label='Choose file...', pos=(20, 20))
 
         self.fileNameLabel = None
         self.fileName = None
+        self.Centre()
         # self.file_path = None
 
         # pnl = wx.Panel(self)
@@ -36,26 +36,9 @@ class WindowFunction(wx.Frame):
         # # self.Centre()
         #
         self.chooseButton.Bind(wx.EVT_BUTTON, self.ChooseFile)
-        # self.playButton.Bind(wx.EVT_BUTTON, self.PlayFunction(self.file_path))
-        # self.stopButton.Bind(wx.EVT_BUTTON, self.StopFunction())
+        self.playButton.Bind(wx.EVT_BUTTON, self.PlayFunction)
+        self.stopButton.Bind(wx.EVT_BUTTON, self.StopFunction)
 
-    # def StopFunction(self):
-    #     pygame.mixer.music.pause()
-    #
-    # def PlayFunction(self, file_path):
-    #     pygame.mixer.init(22050, -16, 2, 2048)
-    #     pygame.mixer.music.load(file_path)
-    #     pygame.mixer.music.play()
-    #
-    # def PlayAudio(self, e):
-    #     pnl = wx.Panel(self)
-    #     font = wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, 'microsoft yahei ui')
-    #     st1 = wx.StaticText(pnl, label=self.file_path, pos=(150, 25))
-    #     st1.SetFont(font)
-    #
-    #     playButton = wx.Button(pnl, label='Play Audio', pos=(100, 20))
-    #     playButton.Bind(wx.EVT_BUTTON, self.PlayFunction(self.file_path))
-    #
     def ChooseFile(self, e):
         with wx.FileDialog(self, "Open mp3 file", wildcard="mp3 files (*.mp3)|*.mp3",
                            style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
@@ -65,22 +48,14 @@ class WindowFunction(wx.Frame):
             self.file_path = fileDialog.GetPath()
             self.fileName = self.file_path.rsplit("/", 1)
             self.fileNameLabel = wx.StaticText(self, label=self.fileName[1], pos=(150, 25))
-    #
-    #     # self.PlayAudio(wx.EVT_BUTTON, file_path)
-    #
-    #     # pnl = wx.Panel(self)
-    #     # st1 = wx.StaticText(pnl, label=file_path, pos=(150, 25))
-    #     # st1.SetFont(font=wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, 'microsoft yahei ui'))
 
-    # def PlayAudio(self, e):
-    #     pnl = wx.Panel(self)
-    #     font = wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, 'microsoft yahei ui')
-    #     st1 = wx.StaticText(pnl, label=self.file_path, pos=(150, 25))
-    #     st1.SetFont(font)
-    #
-    #     playButton = wx.Button(pnl, label='Play Audio', pos=(100, 20))
-    #     playButton.Bind(wx.EVT_BUTTON, self.PlayFunction(self.file_path))
+    def PlayFunction(self, e):
+        pygame.mixer.init(22050, -16, 2, 2048)
+        pygame.mixer.music.load(self.file_path)
+        pygame.mixer.music.play()
 
+    def StopFunction(self, e):
+        pygame.mixer.music.pause()
 
 
 def main():
